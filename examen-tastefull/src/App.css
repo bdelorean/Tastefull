@@ -1,1 +1,18 @@
 @import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+ 
+@theme {
+  --color-bg:#FDFBFF;
+  --color-accent:#BFA2DB;
+  --color-secondary:#F48FB1;
+  --color-dark:#494151;
+ }
+
+ body{
+  font-family: 'Lora';
+  background-color: var(--color-bg);
+  color: var(--color-dark);
+ }
+ 
+ 
