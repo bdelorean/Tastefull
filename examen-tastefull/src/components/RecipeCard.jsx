@@ -5,11 +5,11 @@ import { FaClock, FaUtensils } from "react-icons/fa";
 const RecipeCard = ({ recipe }) => {
   return (
     <Link to={`/recipe/${recipe.id}`}>
-      <div className="border-8 border-white rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
+      <div className="border-10 border-white rounded-lg overflow-hidden shadow-lg flex flex-col h-full">
         <img
           src={recipe.image}
           alt={recipe.title}
-          className="w-full h-48 object-cover rounded-lg"
+          className="w-full h-48 object-cover  transition-transform duration-500 ease-in-out transform hover:scale-105"
         />
         <div className="p-4 flex flex-col justify-between flex-grow">
           <div className="flex justify-between">

@@ -1,4 +1,6 @@
+import BreakfastRecipes from "../components/BreakfastRecipes";
 import HeroSection from "../components/HeroSection";
+import MainCourseRecipes from "../components/MainCourseRecipes";
 import PopularRecipes from "../components/PopularRecipes";
 import SearchBar from "../components/SearchBar";
 
@@ -9,6 +11,8 @@ const Home = () => {
       <main className="px-12">
         <SearchBar />
         <PopularRecipes />
+        <BreakfastRecipes />
+        <MainCourseRecipes />
       </main>
     </>
   );

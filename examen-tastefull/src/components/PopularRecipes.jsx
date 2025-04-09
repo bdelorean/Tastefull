@@ -2,19 +2,23 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import RecipeCard from "./RecipeCard";
+import { fetchWithCache } from "../utils/fetchWithCache";
 
 function PopularRecipes() {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
     const fetchPopularRecipes = async () => {
-      const response = await axios.get(
-        `https://api.spoonacular.com/recipes/random?number=4&apiKey=${
-          import.meta.env.VITE_MY_API_KEY
-        }`
-      );
-      console.log(response.data);
-      setRecipes(response.data.recipes);
+      const data = await fetchWithCache("popularRecipes", async () => {
+        const response = await axios.get(
+          `https://api.spoonacular.com/recipes/random?number=4&apiKey=${
+            import.meta.env.VITE_MY_API_KEY
+          }`
+        );
+        return response.data.recipes;
+      });
+
+      setRecipes(data);
     };
     fetchPopularRecipes();
   }, []);
@@ -33,7 +37,6 @@ function PopularRecipes() {
           ))}
         </div>
       </div>
-      
     </>
   );
 }
