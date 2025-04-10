@@ -14,6 +14,15 @@ const SearchBar = () => {
       setRecipes([]);
       return;
     }
+
+    const regex = /[^a-zA-Z0-9\s]/;
+    if (regex.test(query)) {
+      setError(
+        "Invalid characters detected. Please try again with a valid search term."
+      );
+      setRecipes([]);
+      return;
+    }
     setError("");
 
     try {
@@ -53,6 +62,7 @@ const SearchBar = () => {
   return (
     <>
       <div className="py-6 px-4 flex flex-col justify-center items-center">
+        <h2 className="font-bold text-2xl mb-4">Your Craving Starts Here 👇</h2>
         <div className="flex items-center justify-center w-200">
           <input
             type="text"
@@ -60,7 +70,7 @@ const SearchBar = () => {
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             placeholder="Carrot cake.."
-            className="w-full max-w-md p-2 border border-gray-300 rounded-2xl placeholder:italic"
+            className="w-full max-w-md p-2 border border-gray-400 rounded-2xl placeholder:italic"
           />
           <SearchButton onClick={handleSearch} />
         </div>

@@ -4,6 +4,7 @@ import axios from "axios";
 import RecipeGrid from "../components/RecipeGrid";
 import { fetchWithCache } from "../utils/fetchWithCache";
 import GoBackButton from "../components/GoBackButton";
+import HeroSectionCategory from "../components/HeroSectionCategory";
 
 const Category = () => {
   const { categoryName } = useParams();
@@ -38,6 +39,7 @@ const Category = () => {
 
   return (
     <>
+    <HeroSectionCategory />
       <div className="py-6 px-12">
         
         <GoBackButton />
