@@ -12,7 +12,7 @@ const Footer = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <p className="z-10 relative">&copy; 2025 TasteFull Recipes</p>
+        <p className="z-10 relative">&copy; Bianca Delorean | 2025 TasteFull Recipes</p>
         <p className="text-m mt-2">Created with love and lots of coffee ☕</p>
         <p className="text-m mt-2 italic">
           1234 Imaginary Street, Flavor Town

@@ -13,9 +13,20 @@ const HeroSection = () => {
       }}
     >
       <div>
-        <div>
+        <div
+          className="gap-20 flex flex-col "
+          
+        >
+          <div>
+            <p className="text-bg italic ml-20 text-3xl w-150 ">
+              A balanced diet is a cookie in each hand!{" "}
+            </p>
+            <p className="text-bg italic ml-20 text-3xl w-150">
+              Find the perfect dessert to make your day even better !
+            </p>
+          </div>
           <Link to="/category/desserts">
-            <Button className="text-accent ml-20 mb-20 hover:text-bg hover:bg-secondary cursor-pointer" />
+            <Button className="text-accent ml-20 mb-20 hover:text-bg hover:bg-secondary cursor-pointer font-bold" />
           </Link>
         </div>
       </div>

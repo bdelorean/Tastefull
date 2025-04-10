@@ -10,7 +10,7 @@ const Home = () => {
       <HeroSection />
       <main className="px-12">
         <SearchBar />
-        <PopularRecipes />
+        <PopularRecipes data-aos="fade-up"/>
         <BreakfastRecipes />
         <MainCourseRecipes />
       </main>

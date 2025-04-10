@@ -15,4 +15,6 @@
   color: var(--color-dark);
  }
  
- 
+ .ingredients ol{
+  list-style-type: decimal;
+ }

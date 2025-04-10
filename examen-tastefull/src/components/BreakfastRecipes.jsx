@@ -24,7 +24,7 @@ function BreakfastRecipes() {
   }, []);
 
   return (
-    <div className="py-6 px-4">
+    <div className="py-6 px-4" data-aos="fade-up">
       <Link to="/category/breakfast">
         <h2 className="text-2xl font-bold mb-4 cursor-pointer hover:underline">
           Breakfast Recipes
