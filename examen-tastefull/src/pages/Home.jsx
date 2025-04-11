@@ -6,15 +6,21 @@ import SearchBar from "../components/SearchBar";
 
 const Home = () => {
   return (
-    <>
-      <HeroSection />
+    <div className="page">
+      <HeroSection
+        backgroundImage="/images/heroImage.jpg"
+        title="A balanced diet is a cookie in each hand!"
+        subtitle="Find the perfect dessert to make your day even better!"
+        buttonLink="/category/desserts"
+        buttonText="Discover more"
+      />
       <main className="px-12">
         <SearchBar />
-        <PopularRecipes data-aos="fade-up"/>
+        <PopularRecipes />
         <BreakfastRecipes />
         <MainCourseRecipes />
       </main>
-    </>
+    </div>
   );
 };
 

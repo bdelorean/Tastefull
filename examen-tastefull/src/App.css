@@ -1,20 +1,40 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
- 
-@theme {
-  --color-bg:#FDFBFF;
-  --color-accent:#BFA2DB;
-  --color-secondary:#F48FB1;
-  --color-dark:#494151;
- }
+@import url("https://fonts.googleapis.com/css2?family=Lora&display=swap");
 
- body{
-  font-family: 'Lora';
+@theme {
+  --color-bg: #fdfbff;
+  --color-accent: #bfa2db;
+  --color-secondary: #f48fb1;
+  --color-dark: #494151;
+}
+
+body {
+  font-family: "Lora";
   background-color: var(--color-bg);
   color: var(--color-dark);
- }
- 
- .ingredients ol{
+}
+
+.ingredients ol {
   list-style-type: decimal;
- }
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Apply to page container */
+.page {
+  animation: fadeIn 0.7s ease-in-out;
+}
+
+/* Ensure proper stacking */
+.route-container {
+  position: relative;
+}

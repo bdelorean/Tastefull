@@ -1,5 +1,6 @@
 import { FaSearch } from "react-icons/fa"
 
+//Ontvangt onClick functie als prop
 const SearchButton = ({ onClick }) => {
   return (
     <>

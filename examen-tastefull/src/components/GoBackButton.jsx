@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+// Navigeer naar de homepagina bij het klikken op de knop
 const GoBackButton = () => {
   const navigate = useNavigate();
 

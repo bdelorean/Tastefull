@@ -8,10 +8,11 @@ const SearchBar = () => {
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState("");
 
+  // Functie voor het uitvoeren van de zoekopdracht
   const handleSearch = async () => {
     if (query === "") {
       setError("Please enter a valid search query.");
-      setRecipes([]);
+      setRecipes([]); // Maak de lijst leeg bij een fout
       return;
     }
 
@@ -20,11 +21,12 @@ const SearchBar = () => {
       setError(
         "Invalid characters detected. Please try again with a valid search term."
       );
-      setRecipes([]);
+      setRecipes([]); // Maak de lijst leeg bij ongeldige tekens
       return;
     }
     setError("");
-
+    
+    // Haal recepten op via de API van Spoonacular
     try {
       const response = await axios.get(
         `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${
@@ -33,30 +35,32 @@ const SearchBar = () => {
       );
       const results = response.data.results;
 
-      // setRecipes(response.data.results);
+      // Controleer of er recepten gevonden zijn
       if (results.length === 0) {
         setError("No recipes found. Please try a different search.");
-        setRecipes([]); // aici setăm lista goală explicit
+        setRecipes([]); 
       } else {
-        setRecipes(results); // păstrăm rețetele doar dacă există
-        setError(""); // ștergem eventualele erori anterioare
+        setRecipes(results); 
+        setError(""); 
       }
     } catch (error) {
       setError("Something went wrong. Please try again.");
       setRecipes([]); // dacă e o eroare de rețea, resetăm lista
     }
   };
-
+  
+  //Werk de zoekterm bij wanneer je typt
   const handleInputChange = (e) => {
     setQuery(e.target.value);
     if (e.target.value === "") {
       setRecipes([]);
     }
   };
-
+  
+  // Zoek wanneer je op Enter drukt
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      handleSearch(); // Se va apela funcția handleSearch când apăsăm Enter
+      handleSearch();
     }
   };
   return (
@@ -74,8 +78,10 @@ const SearchBar = () => {
           />
           <SearchButton onClick={handleSearch} />
         </div>
+         {/* Foutmelding weergeven als er een error is */}
         {error && <p className="text-red-500 text-center mt-2">{error}</p>}
       </div>
+      {/* Recepten weergeven als er resultaten zijn */}
       <div>{recipes.length > 0 && <RecipeGrid recipes={recipes} />}</div>
     </>
   );

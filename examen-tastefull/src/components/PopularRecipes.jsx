@@ -3,12 +3,24 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import RecipeCard from "./RecipeCard";
 import { fetchWithCache } from "../utils/fetchWithCache";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function PopularRecipes() {
   const [recipes, setRecipes] = useState([]);
 
+  //AOS animatie
   useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      offset: 100,
+      once: true,
+      anchorPlacement: "top-bottom",
+    });
+    
+    //Recepten ophalen
     const fetchPopularRecipes = async () => {
+      // Haal gegevens uit localStorage als ze geldig zijn
       const data = await fetchWithCache("popularRecipes", async () => {
         const response = await axios.get(
           `https://api.spoonacular.com/recipes/random?number=4&apiKey=${

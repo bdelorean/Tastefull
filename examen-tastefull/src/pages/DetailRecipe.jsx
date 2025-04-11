@@ -9,11 +9,13 @@ import { GiFruitBowl } from "react-icons/gi";
 import { GiCookingPot } from "react-icons/gi";
 import ReactRating from "react-rating-stars-component";
 
+
 const DetailRecipe = () => {
-  const { recipeId } = useParams();
+  const { recipeId } = useParams(); // Haal het ID van het recept uit de URL
   const [recipe, setRecipe] = useState(null);
   const [rating, setRating] = useState(0);
-
+  
+   // Laad receptgegevens zodra de component geladen is
   useEffect(() => {
     const fetchRecipe = async () => {
       const response = await axios.get(
@@ -21,37 +23,43 @@ const DetailRecipe = () => {
           import.meta.env.VITE_MY_API_KEY
         }&includeNutrition=true`
       );
-      console.log('Response Data:', response.data)
-      setRecipe(response.data);
+      
+      setRecipe(response.data); // Sla het recept op in de state
+       
+      // Genereer een willekeurige score tussen 3 en 5
       const randomRating = Math.floor(Math.random() * 3) + 3;
       setRating(randomRating);
     };
     fetchRecipe();
-  }, [recipeId]);
+  }, [recipeId]);  //Voer opniew als het ID veranderd
 
   if (!recipe) return <div>Loading...</div>;
   
-  // Define the nutrients to be displayed
+  
   
   return (
-    <div className="px-12">
+    <div className="px-12 page">
       <GoBackButton />
 
       <div className="py-25 ">
         <div className="flex flex-row justify-start gap-20">
           <div className="">
             <h1 className="text-3xl font-bold ">{recipe.title}</h1>
+
+            {/* Ratings */}
             <ReactRating
-              count={5} // numărul de stele
-              value={rating} // valoarea rating-ului, pe care o setezi dinamic
-              edit={false} // facem rating-ul doar vizibil, nu editabil
-              size={30} // dimensiunea stelelor
-              activeColor="#ffd700" // culoarea stelelor
+              count={5} 
+              value={rating} 
+              edit={false} 
+              size={30} 
+              activeColor="#ffd700" 
               inactiveColor="#d3d3d3"
               char="★"
               classNames={{ star: "inline-block ", } }
               onChange={() => {}}
             />
+
+           {/* Titel en image van de recept */}
             <img
               src={recipe.image}
               alt={recipe.title}
@@ -59,6 +67,8 @@ const DetailRecipe = () => {
             />
             
           </div>
+
+           {/* Ingrediëntenlijst */}
           <div className="mt-10 bg-gray-200  p-10 ">
             <h2 className="text-xl font-semibold mb-2">Ingredients</h2>
             <ul className="list-disc pl-6 mb-4">
@@ -68,13 +78,15 @@ const DetailRecipe = () => {
             </ul>
           </div>
         </div>
+        
         <div className="">
+          {/* Instructies */}
           <h2 className="text-xl font-semibold mb-2 flex items-center">
             <GiCookingPot />
             Instructions
           </h2>
-          {/* om HTML-inhoud weer te geven die uit de API komt zonder dit kon ik gewoons de tags zien  */}
-          <div className="w-200 ingredients" dangerouslySetInnerHTML={{ __html: recipe.instructions }} /> 
+          {/* om HTML-inhoud weer te geven die uit de API komt zonder dit kon ik gewoon de tags zien  */}
+          <div className="w-200 ingredients ml-4" dangerouslySetInnerHTML={{ __html: recipe.instructions }} /> 
         </div>
         <div className="mt-4">
           <p className="text-lg flex items-center mb-2 gap-1">
@@ -85,6 +97,8 @@ const DetailRecipe = () => {
             <FaUtensils /> <strong>Servings:</strong> {recipe.servings} people
           </p>
         </div>
+
+        {/* Dieetinformatie */}
         <div className="mb-4 flex flex-row items-center gap-2">
           <h3 className="text-lg font-semibold flex items-center gap-1">
             <GiFruitBowl />
@@ -93,8 +107,9 @@ const DetailRecipe = () => {
           <p className="text-m">{recipe.diets.join(", ")}</p>
         </div>
         
+        {/* Nutritionele info */}
         {recipe.nutrition && (
-          <div className="mt-4">
+          <div className="mt-10">
             <h2 className="text-xl font-semibold mb-2 flex items-center gap-2">
               <FaListOl />
               Nutritional Information (per serving)
