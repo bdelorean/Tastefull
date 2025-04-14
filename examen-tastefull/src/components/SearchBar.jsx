@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import RecipeGrid from "./RecipeGrid";
 import SearchButton from "./SearchButton";
@@ -8,11 +8,10 @@ const SearchBar = () => {
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState("");
 
-  // Functie voor het uitvoeren van de zoekopdracht
   const handleSearch = async () => {
     if (query === "") {
       setError("Please enter a valid search query.");
-      setRecipes([]); // Maak de lijst leeg bij een fout
+      setRecipes([]); // Leeg de lijst bij een fout
       return;
     }
 
@@ -21,13 +20,13 @@ const SearchBar = () => {
       setError(
         "Invalid characters detected. Please try again with a valid search term."
       );
-      setRecipes([]); // Maak de lijst leeg bij ongeldige tekens
+      setRecipes([]); // Leeg de lijst bij ongeldige tekens
       return;
     }
     setError("");
-    
-    // Haal recepten op via de API van Spoonacular
+
     try {
+      // Haal de lijst met recepten op via de complexSearch API
       const response = await axios.get(
         `https://api.spoonacular.com/recipes/complexSearch?query=${query}&apiKey=${
           import.meta.env.VITE_MY_API_KEY
@@ -35,34 +34,45 @@ const SearchBar = () => {
       );
       const results = response.data.results;
 
-      // Controleer of er recepten gevonden zijn
       if (results.length === 0) {
         setError("No recipes found. Please try a different search.");
-        setRecipes([]); 
+        setRecipes([]);
       } else {
-        setRecipes(results); 
-        setError(""); 
+       // Haal extra details op voor elke recept met de information endpoint
+       // Met Promise.all haal je details voor alle recepten tegelijk op
+        const recipeDetails = await Promise.all(
+          results.map(async (recipe) => {
+            const detailResponse = await axios.get(
+              `https://api.spoonacular.com/recipes/${
+                recipe.id
+              }/information?apiKey=${import.meta.env.VITE_MY_API_KEY}`
+            );
+            return detailResponse.data;// Geef alle details van het recept terug
+          })
+        );
+
+        setRecipes(recipeDetails); // Update de staat met volledige receptgegevens
+        setError("");
       }
     } catch (error) {
       setError("Something went wrong. Please try again.");
-      setRecipes([]); // dacă e o eroare de rețea, resetăm lista
+      setRecipes([]); // Leeg de lijst bij een netwerkfout
     }
   };
-  
-  //Werk de zoekterm bij wanneer je typt
+
   const handleInputChange = (e) => {
     setQuery(e.target.value);
     if (e.target.value === "") {
       setRecipes([]);
     }
   };
-  
-  // Zoek wanneer je op Enter drukt
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       handleSearch();
     }
   };
+
   return (
     <>
       <div className="py-6 px-4 flex flex-col justify-center items-center">
@@ -78,10 +88,8 @@ const SearchBar = () => {
           />
           <SearchButton onClick={handleSearch} />
         </div>
-         {/* Foutmelding weergeven als er een error is */}
         {error && <p className="text-red-500 text-center mt-2">{error}</p>}
       </div>
-      {/* Recepten weergeven als er resultaten zijn */}
       <div>{recipes.length > 0 && <RecipeGrid recipes={recipes} />}</div>
     </>
   );

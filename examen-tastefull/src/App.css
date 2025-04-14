@@ -15,7 +15,7 @@ body {
   color: var(--color-dark);
 }
 
-.ingredients ol {
+.instructions ol {
   list-style-type: decimal;
 }
 
@@ -37,4 +37,10 @@ body {
 /* Ensure proper stacking */
 .route-container {
   position: relative;
+}
+
+.ingredients{
+  background-image: url('/images/ingredientsbg.png');
+  background-position: center;
+  background-repeat: no-repeat;
 }

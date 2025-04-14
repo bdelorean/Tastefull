@@ -9,13 +9,12 @@ import { GiFruitBowl } from "react-icons/gi";
 import { GiCookingPot } from "react-icons/gi";
 import ReactRating from "react-rating-stars-component";
 
-
 const DetailRecipe = () => {
   const { recipeId } = useParams(); // Haal het ID van het recept uit de URL
   const [recipe, setRecipe] = useState(null);
   const [rating, setRating] = useState(0);
-  
-   // Laad receptgegevens zodra de component geladen is
+
+  // Laad receptgegevens zodra de component geladen is
   useEffect(() => {
     const fetchRecipe = async () => {
       const response = await axios.get(
@@ -23,20 +22,18 @@ const DetailRecipe = () => {
           import.meta.env.VITE_MY_API_KEY
         }&includeNutrition=true`
       );
-      
+
       setRecipe(response.data); // Sla het recept op in de state
-       
+
       // Genereer een willekeurige score tussen 3 en 5
       const randomRating = Math.floor(Math.random() * 3) + 3;
       setRating(randomRating);
     };
     fetchRecipe();
-  }, [recipeId]);  //Voer opniew als het ID veranderd
+  }, [recipeId]); //Voer opniew als het ID veranderd
 
   if (!recipe) return <div>Loading...</div>;
-  
-  
-  
+
   return (
     <div className="px-12 page">
       <GoBackButton />
@@ -44,32 +41,31 @@ const DetailRecipe = () => {
       <div className="py-25 ">
         <div className="flex flex-row justify-start gap-20">
           <div className="">
-            <h1 className="text-3xl font-bold ">{recipe.title}</h1>
+            <h1 className="text-3xl font-bold max-w-md">{recipe.title}</h1>
 
             {/* Ratings */}
             <ReactRating
-              count={5} 
-              value={rating} 
-              edit={false} 
-              size={30} 
-              activeColor="#ffd700" 
+              count={5}
+              value={rating}
+              edit={false}
+              size={30}
+              activeColor="#ffd700"
               inactiveColor="#d3d3d3"
               char="★"
-              classNames={{ star: "inline-block ", } }
+              classNames={{ star: "inline-block " }}
               onChange={() => {}}
             />
 
-           {/* Titel en image van de recept */}
+            {/* Titel en image van de recept */}
             <img
               src={recipe.image}
               alt={recipe.title}
               className="w-full max-w-md mb-4"
             />
-            
           </div>
 
-           {/* Ingrediëntenlijst */}
-          <div className="mt-10 bg-gray-200  p-10 ">
+          {/* Ingrediëntenlijst */}
+          <div className="mt-20  p-10 ingredients ">
             <h2 className="text-xl font-semibold mb-2">Ingredients</h2>
             <ul className="list-disc pl-6 mb-4">
               {recipe.extendedIngredients.map((ing) => (
@@ -78,15 +74,18 @@ const DetailRecipe = () => {
             </ul>
           </div>
         </div>
-        
-        <div className="">
+
+        <div>
           {/* Instructies */}
-          <h2 className="text-xl font-semibold mb-2 flex items-center">
+          <h2 className="text-xl font-semibold mb-2 flex items-center ">
             <GiCookingPot />
             Instructions
           </h2>
           {/* om HTML-inhoud weer te geven die uit de API komt zonder dit kon ik gewoon de tags zien  */}
-          <div className="w-200 ingredients ml-4" dangerouslySetInnerHTML={{ __html: recipe.instructions }} /> 
+          <div
+            className="w-200 instructions ml-4"
+            dangerouslySetInnerHTML={{ __html: recipe.instructions }}
+          />
         </div>
         <div className="mt-4">
           <p className="text-lg flex items-center mb-2 gap-1">
@@ -106,7 +105,7 @@ const DetailRecipe = () => {
           </h3>
           <p className="text-m">{recipe.diets.join(", ")}</p>
         </div>
-        
+
         {/* Nutritionele info */}
         {recipe.nutrition && (
           <div className="mt-10">
@@ -117,8 +116,12 @@ const DetailRecipe = () => {
             <table className="w-full max-w-lg bg-gray-100 border border-gray-300 rounded-lg">
               <thead>
                 <tr className="bg-gray-200">
-                  <th className="text-left p-2 border-b border-gray-300">Nutrient</th>
-                  <th className="text-left p-2 border-b border-gray-300">Amount</th>
+                  <th className="text-left p-2 border-b border-gray-300">
+                    Nutrient
+                  </th>
+                  <th className="text-left p-2 border-b border-gray-300">
+                    Amount
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -155,7 +158,6 @@ const DetailRecipe = () => {
           </div>
         )}
       </div>
-      
     </div>
   );
 };
